@@ -2,7 +2,7 @@
 
 - 🌐 **Site en ligne** : https://vite-gourmand-production-2261.up.railway.app
 - 💻 **GitHub** : https://github.com/nassimbelgacem21-gif/vite-gourmand
-- 📋 **Gestion de projet** : https://trello.com/b/avoxY9QC/mon-tableau-trello
+- 📋 **Gestion de projet** : https://trello.com/invite/b/6a0f5cc6c4c41730cef6eff9/ATTI691cb78f843d1d28a61a1829fbb9fec2BC2FA4F8/mon-tableau-trello
 
 
 
