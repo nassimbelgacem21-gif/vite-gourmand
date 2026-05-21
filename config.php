@@ -1,14 +1,15 @@
 <?php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'vite_gourmand');
+$host = getenv('MYSQLHOST') ?: 'localhost';
+$user = getenv('MYSQLUSER') ?: 'root';
+$pass = getenv('MYSQLPASSWORD') ?: '';
+$db = getenv('MYSQLDATABASE') ?: 'vite_gourmand';
+$port = getenv('MYSQLPORT') ?: '3306';
 
 try {
     $pdo = new PDO(
-        'mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',
-        DB_USER,
-        DB_PASS
+        'mysql:host='.$host.';port='.$port.';dbname='.$db.';charset=utf8',
+        $user,
+        $pass
     );
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
