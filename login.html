@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion – Vite & Gourmand</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;color:#2d2d2d;background:#fffdf9;min-height:100vh}
+a{text-decoration:none;color:inherit}
+
+nav{background:#1a1a1a;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.logo{color:#f5a623;font-size:1.4rem;font-weight:700}
+.logo span{color:#fff}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{color:#ccc;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:#f5a623}
+
+.auth-wrapper{display:flex;align-items:center;justify-content:center;padding:4rem 2rem;min-height:calc(100vh - 64px)}
+.auth-box{background:#fff;border:1px solid #f0e8d8;border-radius:16px;padding:2.5rem;width:100%;max-width:440px}
+.auth-box h1{font-size:1.6rem;font-weight:800;margin-bottom:.5rem}
+.auth-box h1 span{color:#f5a623}
+.auth-box p{color:#888;font-size:.9rem;margin-bottom:2rem}
+
+.tabs{display:flex;background:#f5f0e8;border-radius:8px;padding:4px;margin-bottom:2rem}
+.tab{flex:1;padding:10px;text-align:center;font-size:.9rem;font-weight:600;border-radius:6px;cursor:pointer;transition:all .2s;color:#888}
+.tab.active{background:#fff;color:#2d2d2d;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:#555;margin-bottom:.5rem}
+.form-group input{width:100%;padding:12px 14px;border:1px solid #e0d8cc;border-radius:8px;font-size:.95rem;background:#fffdf9;transition:border-color .2s;font-family:inherit}
+.form-group input:focus{outline:none;border-color:#f5a623}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.password-hint{font-size:.75rem;color:#999;margin-top:.4rem}
+.password-hint.valid{color:#2e7d32}
+
+.btn-submit{width:100%;padding:14px;background:#f5a623;color:#1a1a1a;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:background .2s;margin-top:.5rem;font-family:inherit}
+.btn-submit:hover{background:#e09510}
+
+.forgot{text-align:center;margin-top:1rem;font-size:.85rem;color:#888}
+.forgot a{color:#f5a623;font-weight:600}
+
+.divider{display:flex;align-items:center;gap:1rem;margin:1.5rem 0;color:#ccc;font-size:.8rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#f0e8d8}
+
+.alert{padding:12px 14px;border-radius:8px;font-size:.85rem;margin-bottom:1.25rem;display:none}
+.alert.success{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9;display:block}
+.alert.error{background:#fce4e4;color:#c62828;border:1px solid #ffcdd2;display:block}
+
+.reset-form{display:none}
+.reset-form.visible{display:block}
+.main-form{display:block}
+.main-form.hidden{display:none}
+
+footer{background:#1a1a1a;color:#ccc;padding:2rem;text-align:center;font-size:.85rem}
+footer a{color:#888;margin:0 .5rem}
+footer a:hover{color:#f5a623}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Vite <span>& Gourmand</span></a>
+  <div class="nav-links">
+    <a href="menus.html">Nos menus</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="auth-wrapper">
+  <div class="auth-box">
+
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('connexion')">Connexion</div>
+      <div class="tab" onclick="showTab('inscription')">Inscription</div>
+    </div>
+
+    <!-- CONNEXION -->
+    <div id="tab-connexion">
+      <h1>Bon retour <span>!</span></h1>
+      <p>Connectez-vous à votre compte</p>
+      <div id="alert-connexion" class="alert"></div>
+      <div class="main-form" id="main-connexion">
+        <div class="form-group">
+          <label>Adresse email</label>
+          <input type="email" id="login-email" placeholder="votre@email.com">
+        </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input type="password" id="login-password" placeholder="••••••••••">
+        </div>
+        <button class="btn-submit" onclick="seConnecter()">Se connecter</button>
+        <div class="forgot"><a href="#" onclick="showReset()">Mot de passe oublié ?</a></div>
+      </div>
+      <div class="reset-form" id="reset-form">
+        <p style="margin-bottom:1.5rem;color:#555;font-size:.9rem">Saisissez votre email et nous vous enverrons un lien de réinitialisation.</p>
+        <div class="form-group">
+          <label>Adresse email</label>
+          <input type="email" id="reset-email" placeholder="votre@email.com">
+        </div>
+        <button class="btn-submit" onclick="envoyerReset()">Envoyer le lien</button>
+        <div class="forgot"><a href="#" onclick="hideReset()">← Retour à la connexion</a></div>
+      </div>
+    </div>
+
+    <!-- INSCRIPTION -->
+    <div id="tab-inscription" style="display:none">
+      <h1>Créer un <span>compte</span></h1>
+      <p>Rejoignez Vite & Gourmand</p>
+      <div id="alert-inscription" class="alert"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" id="reg-prenom" placeholder="Julie">
+        </div>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" id="reg-nom" placeholder="Dupont">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Adresse email</label>
+        <input type="email" id="reg-email" placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label>Numéro de téléphone</label>
+        <input type="tel" id="reg-tel" placeholder="06 12 34 56 78">
+      </div>
+      <div class="form-group">
+        <label>Adresse postale</label>
+        <input type="text" id="reg-adresse" placeholder="12 rue des Fleurs, Bordeaux">
+      </div>
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" id="reg-password" placeholder="••••••••••" oninput="verifierMdp(this.value)">
+        <div class="password-hint" id="mdp-hint">10 caractères min. avec majuscule, minuscule, chiffre et caractère spécial</div>
+      </div>
+      <button class="btn-submit" onclick="sInscrire()">Créer mon compte</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span>© 2024 Vite & Gourmand</span>
+  <a href="mentions-legales.html">Mentions légales</a>
+  <a href="cgv.html">CGV</a>
+</footer>
+
+<script>
+function showTab(tab){
+  document.getElementById('tab-connexion').style.display = tab==='connexion'?'block':'none';
+  document.getElementById('tab-inscription').style.display = tab==='inscription'?'block':'none';
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',(tab==='connexion'&&i===0)||(tab==='inscription'&&i===1)));
+}
+
+function showReset(){
+  document.getElementById('main-connexion').classList.add('hidden');
+  document.getElementById('reset-form').classList.add('visible');
+}
+
+function hideReset(){
+  document.getElementById('main-connexion').classList.remove('hidden');
+  document.getElementById('reset-form').classList.remove('visible');
+}
+
+function verifierMdp(val){
+  const hint = document.getElementById('mdp-hint');
+  const ok = val.length>=10 && /[A-Z]/.test(val) && /[a-z]/.test(val) && /[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val);
+  hint.textContent = ok ? '✓ Mot de passe valide' : '10 caractères min. avec majuscule, minuscule, chiffre et caractère spécial';
+  hint.className = 'password-hint' + (ok?' valid':'');
+}
+
+function seConnecter(){
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  const alert = document.getElementById('alert-connexion');
+  if(!email||!password){
+    alert.className='alert error';
+    alert.textContent='Veuillez remplir tous les champs.';
+    return;
+  }
+  alert.className='alert success';
+  alert.textContent='Connexion réussie ! Redirection...';
+  setTimeout(()=>window.location.href='index.html',1500);
+}
+
+function sInscrire(){
+  const prenom = document.getElementById('reg-prenom').value;
+  const nom = document.getElementById('reg-nom').value;
+  const email = document.getElementById('reg-email').value;
+  const tel = document.getElementById('reg-tel').value;
+  const adresse = document.getElementById('reg-adresse').value;
+  const password = document.getElementById('reg-password').value;
+  const alert = document.getElementById('alert-inscription');
+  if(!prenom||!nom||!email||!tel||!adresse||!password){
+    alert.className='alert error';
+    alert.textContent='Veuillez remplir tous les champs.';
+    return;
+  }
+  const mdpOk = password.length>=10 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password);
+  if(!mdpOk){
+    alert.className='alert error';
+    alert.textContent='Le mot de passe ne respecte pas les critères de sécurité.';
+    return;
+  }
+  alert.className='alert success';
+  alert.textContent='Compte créé ! Un email de bienvenue vous a été envoyé.';
+  setTimeout(()=>window.location.href='index.html',2000);
+}
+
+function envoyerReset(){
+  const email = document.getElementById('reset-email').value;
+  const alert = document.getElementById('alert-connexion');
+  if(!email){
+    alert.className='alert error';
+    alert.textContent='Veuillez saisir votre adresse email.';
+    return;
+  }
+  alert.className='alert success';
+  alert.textContent='Un lien de réinitialisation a été envoyé à '+email;
+  hideReset();
+}
+</script>
+</body>
+</html>

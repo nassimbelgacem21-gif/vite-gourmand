@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact – Vite & Gourmand</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;color:#2d2d2d;background:#fffdf9;min-height:100vh}
+a{text-decoration:none;color:inherit}
+
+nav{background:#1a1a1a;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.logo{color:#f5a623;font-size:1.4rem;font-weight:700}
+.logo span{color:#fff}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{color:#ccc;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:#f5a623}
+.btn-login{background:#f5a623;color:#1a1a1a!important;padding:8px 18px;border-radius:6px;font-weight:600;font-size:.85rem!important}
+
+.page-header{background:linear-gradient(135deg,#1a1a1a,#2d1a00);color:#fff;padding:60px 2rem;text-align:center}
+.page-header h1{font-size:2.5rem;font-weight:800;margin-bottom:.5rem}
+.page-header h1 span{color:#f5a623}
+.page-header p{color:#ccc;font-size:1rem}
+
+.container{max-width:1000px;margin:0 auto;padding:4rem 2rem}
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:3rem}
+
+.contact-info h2{font-size:1.4rem;font-weight:700;margin-bottom:1.5rem}
+.info-item{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start}
+.info-icon{width:44px;height:44px;background:#fff3dc;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.info-text h4{font-size:.9rem;font-weight:700;margin-bottom:.25rem}
+.info-text p{font-size:.85rem;color:#666;line-height:1.6}
+
+.horaires-card{background:#fff;border:1px solid #f0e8d8;border-radius:12px;padding:1.5rem;margin-top:2rem}
+.horaires-card h4{font-size:.9rem;font-weight:700;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid #f0e8d8}
+.horaire-row{display:flex;justify-content:space-between;font-size:.85rem;padding:4px 0;color:#555}
+.horaire-row span:first-child{font-weight:500}
+.horaire-row.closed span:last-child{color:#c62828}
+
+.contact-form{background:#fff;border:1px solid #f0e8d8;border-radius:16px;padding:2rem}
+.contact-form h2{font-size:1.4rem;font-weight:700;margin-bottom:1.5rem}
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:#555;margin-bottom:.5rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:12px 14px;border:1px solid #e0d8cc;border-radius:8px;font-size:.95rem;background:#fffdf9;transition:border-color .2s;font-family:inherit}
+.form-group input:focus,.form-group textarea:focus{outline:none;border-color:#f5a623}
+.form-group textarea{resize:vertical;min-height:130px}
+.btn-submit{width:100%;padding:14px;background:#f5a623;color:#1a1a1a;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:background .2s;font-family:inherit}
+.btn-submit:hover{background:#e09510}
+.alert{padding:12px 14px;border-radius:8px;font-size:.85rem;margin-bottom:1.25rem;display:none}
+.alert.success{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9;display:block}
+.alert.error{background:#fce4e4;color:#c62828;border:1px solid #ffcdd2;display:block}
+
+footer{background:#1a1a1a;color:#ccc;padding:2rem;text-align:center;font-size:.85rem;margin-top:3rem}
+footer a{color:#888;margin:0 .5rem}
+footer a:hover{color:#f5a623}
+
+@media(max-width:768px){
+  .contact-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Vite <span>& Gourmand</span></a>
+  <div class="nav-links">
+    <a href="menus.html">Nos menus</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html" class="btn-login">Connexion</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Nous <span>contacter</span></h1>
+  <p>Une question ? Un projet ? Nous vous répondons sous 24h</p>
+</div>
+
+<div class="container">
+  <div class="contact-grid">
+
+    <div class="contact-info">
+      <h2>Nos coordonnées</h2>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div class="info-text">
+          <h4>Adresse</h4>
+          <p>12 Rue des Saveurs<br>33000 Bordeaux, France</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div class="info-text">
+          <h4>Téléphone</h4>
+          <p>05 56 00 00 00</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">✉️</div>
+        <div class="info-text">
+          <h4>Email</h4>
+          <p>contact@vite-gourmand.fr</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🚚</div>
+        <div class="info-text">
+          <h4>Zone de livraison</h4>
+          <p>Bordeaux et communes environnantes.<br>Livraison hors Bordeaux : 5€ + 0,59€/km</p>
+        </div>
+      </div>
+
+      <div class="horaires-card">
+        <h4>🕐 Nos horaires</h4>
+        <div class="horaire-row"><span>Lundi</span><span>9h – 18h</span></div>
+        <div class="horaire-row"><span>Mardi</span><span>9h – 18h</span></div>
+        <div class="horaire-row"><span>Mercredi</span><span>9h – 18h</span></div>
+        <div class="horaire-row"><span>Jeudi</span><span>9h – 18h</span></div>
+        <div class="horaire-row"><span>Vendredi</span><span>9h – 19h</span></div>
+        <div class="horaire-row"><span>Samedi</span><span>10h – 17h</span></div>
+        <div class="horaire-row closed"><span>Dimanche</span><span>Fermé</span></div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h2>Envoyer un message</h2>
+      <div id="alert-contact" class="alert"></div>
+      <div class="form-group">
+        <label>Sujet</label>
+        <input type="text" id="contact-titre" placeholder="Ex: Demande de devis mariage">
+      </div>
+      <div class="form-group">
+        <label>Votre email</label>
+        <input type="email" id="contact-email" placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="contact-message" placeholder="Décrivez votre projet ou votre question..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="envoyerMessage()">Envoyer le message</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span>© 2024 Vite & Gourmand</span>
+  <a href="mentions-legales.html">Mentions légales</a>
+  <a href="cgv.html">CGV</a>
+</footer>
+
+<script>
+function envoyerMessage(){
+  const titre = document.getElementById('contact-titre').value;
+  const email = document.getElementById('contact-email').value;
+  const message = document.getElementById('contact-message').value;
+  const alert = document.getElementById('alert-contact');
+  if(!titre||!email||!message){
+    alert.className='alert error';
+    alert.textContent='Veuillez remplir tous les champs.';
+    return;
+  }
+  alert.className='alert success';
+  alert.textContent='✓ Votre message a bien été envoyé ! Nous vous répondrons sous 24h.';
+  document.getElementById('contact-titre').value='';
+  document.getElementById('contact-email').value='';
+  document.getElementById('contact-message').value='';
+}
+</script>
+</body>
+</html>

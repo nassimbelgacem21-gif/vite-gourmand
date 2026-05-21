@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vite & Gourmand</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;color:#2d2d2d;background:#fffdf9}
+a{text-decoration:none;color:inherit}
+
+nav{background:#1a1a1a;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.logo{color:#f5a623;font-size:1.4rem;font-weight:700;letter-spacing:-.5px}
+.logo span{color:#fff}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{color:#ccc;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:#f5a623}
+.btn-login{background:#f5a623;color:#1a1a1a!important;padding:8px 18px;border-radius:6px;font-weight:600;font-size:.85rem!important}
+.btn-login:hover{background:#e09510!important}
+
+.hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d1a00 100%);color:#fff;padding:100px 2rem;text-align:center}
+.hero h1{font-size:3rem;font-weight:800;margin-bottom:1rem}
+.hero h1 span{color:#f5a623}
+.hero p{font-size:1.15rem;color:#ccc;max-width:600px;margin:0 auto 2rem;line-height:1.7}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:#f5a623;color:#1a1a1a;padding:14px 32px;border-radius:8px;font-weight:700;font-size:1rem;transition:transform .2s}
+.btn-primary:hover{background:#e09510;transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:#fff;padding:14px 32px;border-radius:8px;font-weight:600;font-size:1rem;border:2px solid rgba(255,255,255,.3);transition:border-color .2s}
+.btn-secondary:hover{border-color:#f5a623;color:#f5a623}
+
+section{padding:80px 2rem}
+.container{max-width:1100px;margin:0 auto}
+.section-title{text-align:center;margin-bottom:3rem}
+.section-title h2{font-size:2rem;font-weight:700;margin-bottom:.5rem}
+.section-title p{color:#777;font-size:1rem}
+.accent{color:#f5a623}
+
+.about{background:#fff}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-text h2{font-size:2rem;font-weight:700;margin-bottom:1rem;line-height:1.3}
+.about-text p{color:#555;line-height:1.8;margin-bottom:1rem}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.stat{background:#fffdf9;border:1px solid #f0e8d8;border-radius:10px;padding:1.25rem;text-align:center}
+.stat-num{font-size:2rem;font-weight:800;color:#f5a623}
+.stat-label{font-size:.8rem;color:#888;margin-top:.25rem}
+.about-img{background:linear-gradient(135deg,#f5a623,#e07510);border-radius:16px;height:350px;display:flex;align-items:center;justify-content:center;font-size:5rem}
+
+.values{background:#fffdf9}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.value-card{background:#fff;border:1px solid #f0e8d8;border-radius:12px;padding:2rem;text-align:center;transition:transform .2s,box-shadow .2s}
+.value-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(245,166,35,.15)}
+.value-icon{font-size:2.5rem;margin-bottom:1rem}
+.value-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.value-card p{color:#666;font-size:.9rem;line-height:1.6}
+
+.reviews{background:#fff}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.review-card{background:#fffdf9;border:1px solid #f0e8d8;border-radius:12px;padding:1.5rem}
+.stars{color:#f5a623;font-size:1.1rem;margin-bottom:.75rem}
+.review-text{color:#555;font-size:.9rem;line-height:1.7;margin-bottom:1rem;font-style:italic}
+.reviewer{display:flex;align-items:center;gap:.75rem}
+.avatar{width:38px;height:38px;border-radius:50%;background:#f5a623;display:flex;align-items:center;justify-content:center;font-weight:700;color:#1a1a1a;font-size:.85rem}
+.reviewer-name{font-weight:600;font-size:.9rem}
+.reviewer-date{font-size:.75rem;color:#999}
+
+footer{background:#1a1a1a;color:#ccc;padding:3rem 2rem 1.5rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto}
+.footer-brand .logo{font-size:1.3rem;display:block;margin-bottom:1rem}
+.footer-brand p{font-size:.85rem;line-height:1.7;color:#888}
+footer h4{color:#fff;font-size:.95rem;font-weight:600;margin-bottom:1rem}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:.5rem}
+.footer-links a{color:#888;font-size:.85rem;transition:color .2s}
+.footer-links a:hover{color:#f5a623}
+.horaires-list{list-style:none}
+.horaires-list li{font-size:.82rem;color:#888;padding:3px 0;display:flex;justify-content:space-between;gap:1rem}
+.footer-bottom{border-top:1px solid #333;margin-top:2rem;padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin-left:auto;margin-right:auto;font-size:.8rem;color:#555;flex-wrap:wrap;gap:.5rem}
+
+@media(max-width:768px){
+  .about-grid,.values-grid,.reviews-grid,.footer-grid{grid-template-columns:1fr}
+  .hero h1{font-size:2rem}
+  .nav-links{gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Vite <span>& Gourmand</span></a>
+  <div class="nav-links">
+    <a href="menus.html">Nos menus</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html" class="btn-login">Connexion</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>La gastronomie <span>livrée</span> chez vous</h1>
+  <p>Depuis 25 ans à Bordeaux, Julie et José créent des menus d'exception pour tous vos événements. Noël, Pâques, mariages ou repas en famille — nous nous occupons de tout.</p>
+  <div class="hero-btns">
+    <a href="menus.html" class="btn-primary">Découvrir nos menus</a>
+    <a href="contact.html" class="btn-secondary">Nous contacter</a>
+  </div>
+</section>
+
+<section class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>Une histoire de <span style="color:#f5a623">passion</span> et de saveurs</h2>
+        <p>Fondée en 1999 par Julie et José, Vite & Gourmand est née d'une passion commune pour la gastronomie française et le partage. Ce qui a commencé comme un petit service de traiteur local est devenu une référence à Bordeaux.</p>
+        <p>Notre engagement : des produits frais, des recettes maison, et un service irréprochable pour chaque événement, qu'il soit intime ou festif.</p>
+        <div class="about-stats">
+          <div class="stat"><div class="stat-num">25</div><div class="stat-label">Ans d'expérience</div></div>
+          <div class="stat"><div class="stat-num">2000+</div><div class="stat-label">Clients satisfaits</div></div>
+          <div class="stat"><div class="stat-num">4</div><div class="stat-label">Thèmes de menus</div></div>
+          <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Fait maison</div></div>
+        </div>
+      </div>
+      <div class="about-img">🍽️</div>
+    </div>
+  </div>
+</section>
+
+<section class="values">
+  <div class="container">
+    <div class="section-title">
+      <h2>Notre <span class="accent">professionnalisme</span></h2>
+      <p>Ce qui nous distingue depuis 25 ans</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card"><div class="value-icon">👨‍🍳</div><h3>Expertise culinaire</h3><p>Deux chefs passionnés avec plus de 25 ans d'expérience dans la gastronomie française et la cuisine de traiteur haut de gamme.</p></div>
+      <div class="value-card"><div class="value-icon">🌿</div><h3>Produits frais & locaux</h3><p>Nous sélectionnons nos ingrédients auprès de producteurs locaux bordelais pour garantir fraîcheur et qualité à chaque prestation.</p></div>
+      <div class="value-card"><div class="value-icon">🚚</div><h3>Livraison à domicile</h3><p>Nous livrons chez vous ou sur votre lieu d'événement. Service disponible à Bordeaux et dans les communes environnantes.</p></div>
+      <div class="value-card"><div class="value-icon">🎄</div><h3>Menus de saison</h3><p>Noël, Pâques, événements privés ou repas classiques — nos menus s'adaptent à toutes les occasions avec des recettes renouvelées.</p></div>
+      <div class="value-card"><div class="value-icon">🥗</div><h3>Options pour tous</h3><p>Végétarien, vegan, sans allergènes — nous proposons des alternatives pour que chaque convive puisse profiter de notre cuisine.</p></div>
+      <div class="value-card"><div class="value-icon">⭐</div><h3>Satisfaction garantie</h3><p>Plus de 2000 clients nous font confiance. Chaque avis est lu et pris en compte pour améliorer continuellement nos prestations.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="container">
+    <div class="section-title">
+      <h2>Ce que disent <span class="accent">nos clients</span></h2>
+      <p>Avis vérifiés par notre équipe</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Un repas de Noël absolument parfait. Les plats étaient délicieux, la livraison ponctuelle et le service impeccable. Julie et José sont de véritables professionnels !"</p>
+        <div class="reviewer"><div class="avatar">ML</div><div><div class="reviewer-name">Marie L.</div><div class="reviewer-date">Décembre 2023</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Nous avons commandé pour notre mariage et tous nos invités ont été émerveillés. Les menus sont raffinés, les portions généreuses. Je recommande vivement !"</p>
+        <div class="reviewer"><div class="avatar">TM</div><div><div class="reviewer-name">Thomas M.</div><div class="reviewer-date">Juin 2024</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★☆</div>
+        <p class="review-text">"Excellente prestation pour notre repas d'entreprise. Le menu végétarien était particulièrement réussi. Livraison rapide et emballages soignés."</p>
+        <div class="reviewer"><div class="avatar">SC</div><div><div class="reviewer-name">Sophie C.</div><div class="reviewer-date">Mars 2024</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">Vite <span style="color:#fff">& Gourmand</span></span>
+      <p>Traiteur bordelais depuis 1999. Julie et José vous proposent des menus d'exception pour tous vos événements.</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="menus.html">Nos menus</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Connexion</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><a href="cgv.html">CGV</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Horaires</h4>
+      <ul class="horaires-list">
+        <li><span>Lundi</span><span>9h – 18h</span></li>
+        <li><span>Mardi</span><span>9h – 18h</span></li>
+        <li><span>Mercredi</span><span>9h – 18h</span></li>
+        <li><span>Jeudi</span><span>9h – 18h</span></li>
+        <li><span>Vendredi</span><span>9h – 19h</span></li>
+        <li><span>Samedi</span><span>10h – 17h</span></li>
+        <li><span>Dimanche</span><span>Fermé</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Vite & Gourmand — Tous droits réservés</span>
+    <span><a href="mentions-legales.html" style="color:#555">Mentions légales</a> · <a href="cgv.html" style="color:#555">CGV</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

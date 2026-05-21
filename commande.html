@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commander – Vite & Gourmand</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;color:#2d2d2d;background:#fffdf9;min-height:100vh}
+a{text-decoration:none;color:inherit}
+
+nav{background:#1a1a1a;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.logo{color:#f5a623;font-size:1.4rem;font-weight:700}
+.logo span{color:#fff}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{color:#ccc;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:#f5a623}
+.btn-login{background:#f5a623;color:#1a1a1a!important;padding:8px 18px;border-radius:6px;font-weight:600;font-size:.85rem!important}
+
+.page-header{background:linear-gradient(135deg,#1a1a1a,#2d1a00);color:#fff;padding:60px 2rem;text-align:center}
+.page-header h1{font-size:2.5rem;font-weight:800;margin-bottom:.5rem}
+.page-header h1 span{color:#f5a623}
+.page-header p{color:#ccc;font-size:1rem}
+
+.container{max-width:1000px;margin:0 auto;padding:3rem 2rem}
+.commande-grid{display:grid;grid-template-columns:1fr 340px;gap:2rem}
+
+/* ETAPES */
+.steps{display:flex;gap:0;margin-bottom:2rem}
+.step{flex:1;text-align:center;padding:.75rem;font-size:.8rem;font-weight:600;color:#888;border-bottom:2px solid #f0e8d8;position:relative}
+.step.active{color:#f5a623;border-bottom-color:#f5a623}
+.step.done{color:#2e7d32;border-bottom-color:#2e7d32}
+.step-num{display:inline-block;width:24px;height:24px;border-radius:50%;border:2px solid currentColor;line-height:20px;margin-right:.4rem;font-size:.75rem}
+
+.form-card{background:#fff;border:1px solid #f0e8d8;border-radius:16px;padding:2rem;margin-bottom:1.5rem}
+.form-card h3{font-size:1rem;font-weight:700;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid #f0e8d8}
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:#555;margin-bottom:.5rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 14px;border:1px solid #e0d8cc;border-radius:8px;font-size:.95rem;background:#fffdf9;transition:border-color .2s;font-family:inherit}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:#f5a623}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group input[readonly]{background:#f5f0e8;color:#888}
+
+.info-livraison{background:#fff8e1;border-left:4px solid #f5a623;border-radius:0 8px 8px 0;padding:1rem;margin-bottom:1.25rem;font-size:.85rem;color:#666;line-height:1.7}
+
+/* RECAP */
+.recap{background:#fff;border:1px solid #f0e8d8;border-radius:16px;padding:1.5rem;position:sticky;top:80px;height:fit-content}
+.recap h3{font-size:1rem;font-weight:700;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid #f0e8d8}
+.recap-menu{display:flex;gap:1rem;align-items:center;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid #f0e8d8}
+.recap-emoji{width:48px;height:48px;background:linear-gradient(135deg,#f5a623,#e07510);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.recap-menu-info h4{font-size:.9rem;font-weight:700}
+.recap-menu-info p{font-size:.8rem;color:#888}
+.recap-ligne{display:flex;justify-content:space-between;font-size:.85rem;padding:5px 0;color:#555}
+.recap-ligne.reduction{color:#2e7d32}
+.recap-ligne.total{font-weight:700;font-size:1rem;color:#2d2d2d;border-top:1px solid #f0e8d8;margin-top:.5rem;padding-top:.75rem}
+.btn-commander{width:100%;padding:14px;background:#f5a623;color:#1a1a1a;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:background .2s;margin-top:1.25rem;font-family:inherit}
+.btn-commander:hover{background:#e09510}
+
+.alert{padding:12px 14px;border-radius:8px;font-size:.85rem;margin-bottom:1.25rem;display:none}
+.alert.success{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9;display:block}
+.alert.error{background:#fce4e4;color:#c62828;border:1px solid #ffcdd2;display:block}
+
+.conditions-important{background:#fce4e4;border-left:4px solid #c62828;border-radius:0 8px 8px 0;padding:1rem;margin-bottom:1.5rem}
+.conditions-important h4{font-size:.85rem;font-weight:700;color:#c62828;margin-bottom:.4rem}
+.conditions-important p{font-size:.82rem;color:#666;line-height:1.7}
+
+footer{background:#1a1a1a;color:#ccc;padding:2rem;text-align:center;font-size:.85rem;margin-top:3rem}
+footer a{color:#888;margin:0 .5rem}
+footer a:hover{color:#f5a623}
+
+@media(max-width:768px){
+  .commande-grid{grid-template-columns:1fr}
+  .recap{position:static}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Vite <span>& Gourmand</span></a>
+  <div class="nav-links">
+    <a href="menus.html">Nos menus</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html" class="btn-login">Connexion</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Votre <span>commande</span></h1>
+  <p>Remplissez les informations de votre prestation</p>
+</div>
+
+<div class="container">
+  <div class="steps">
+    <div class="step active"><span class="step-num">1</span>Vos infos</div>
+    <div class="step active"><span class="step-num">2</span>Menu & personnes</div>
+    <div class="step active"><span class="step-num">3</span>Récapitulatif</div>
+  </div>
+
+  <div id="alert-commande" class="alert"></div>
+
+  <div class="commande-grid">
+    <div>
+      <div class="form-card">
+        <h3>👤 Informations personnelles</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" id="cmd-prenom" value="Julie" readonly>
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" id="cmd-nom" value="Dupont" readonly>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="cmd-email" value="julie.dupont@email.com" readonly>
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="tel" id="cmd-tel" value="06 12 34 56 78" readonly>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>📍 Informations de la prestation</h3>
+        <div class="info-livraison">
+          🚚 Livraison gratuite à Bordeaux. Hors Bordeaux : <strong>5€ + 0,59€/km</strong>
+        </div>
+        <div class="form-group">
+          <label>Adresse de livraison</label>
+          <input type="text" id="cmd-adresse" placeholder="12 rue des Fleurs, Bordeaux" oninput="calculerPrix()">
+        </div>
+        <div class="form-group">
+          <label>Ville</label>
+          <select id="cmd-ville" onchange="calculerPrix()">
+            <option value="bordeaux">Bordeaux (livraison gratuite)</option>
+            <option value="merignac">Mérignac (~8km)</option>
+            <option value="pessac">Pessac (~10km)</option>
+            <option value="talence">Talence (~6km)</option>
+            <option value="begles">Bègles (~7km)</option>
+            <option value="autre">Autre ville</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date de la prestation</label>
+            <input type="date" id="cmd-date">
+          </div>
+          <div class="form-group">
+            <label>Heure souhaitée</label>
+            <input type="time" id="cmd-heure" value="12:00">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>🍽️ Menu & nombre de personnes</h3>
+        <div class="form-group">
+          <label>Menu choisi</label>
+          <select id="cmd-menu" onchange="changerMenu()">
+            <option value="1">Menu Noël Prestige – 185€ (8 pers. min.)</option>
+            <option value="2">Menu Pâques Gourmand – 120€ (6 pers. min.)</option>
+            <option value="3">Menu Mariage Classique – 320€ (20 pers. min.)</option>
+            <option value="4">Menu Végétarien Printemps – 95€ (4 pers. min.)</option>
+            <option value="5">Menu Vegan Découverte – 85€ (4 pers. min.)</option>
+            <option value="6">Menu Entreprise Premium – 65€ (10 pers. min.)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nombre de personnes</label>
+          <input type="number" id="cmd-personnes" value="8" min="1" oninput="calculerPrix()">
+          <div style="font-size:.78rem;color:#888;margin-top:.3rem" id="personnes-hint"></div>
+        </div>
+
+        <div class="conditions-important" id="conditions-box">
+          <h4>⚠️ Conditions de ce menu</h4>
+          <p id="conditions-texte">Ce menu doit être commandé au minimum 7 jours avant la date de la prestation. Conservation au réfrigérateur entre 2°C et 4°C.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECAP -->
+    <div class="recap">
+      <h3>📋 Récapitulatif</h3>
+      <div class="recap-menu">
+        <div class="recap-emoji" id="recap-emoji">🎄</div>
+        <div class="recap-menu-info">
+          <h4 id="recap-titre">Menu Noël Prestige</h4>
+          <p id="recap-personnes">8 personnes minimum</p>
+        </div>
+      </div>
+      <div class="recap-ligne"><span>Prix menu</span><span id="recap-prix-menu">185 €</span></div>
+      <div class="recap-ligne"><span>Livraison</span><span id="recap-livraison">Gratuite</span></div>
+      <div class="recap-ligne reduction" id="recap-reduction-ligne" style="display:none"><span>Réduction groupe (−10%)</span><span id="recap-reduction">-0 €</span></div>
+      <div class="recap-ligne total"><span>Total</span><span id="recap-total">185 €</span></div>
+      <button class="btn-commander" onclick="validerCommande()">✓ Valider la commande</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2024 Vite & Gourmand</span>
+  <a href="mentions-legales.html">Mentions légales</a>
+  <a href="cgv.html">CGV</a>
+</footer>
+
+<script>
+const menus = [
+  {id:1,titre:"Menu Noël Prestige",prix:185,personnes:8,emoji:"🎄",conditions:"Ce menu doit être commandé au minimum 7 jours avant la date de la prestation. Conservation au réfrigérateur entre 2°C et 4°C."},
+  {id:2,titre:"Menu Pâques Gourmand",prix:120,personnes:6,emoji:"🐣",conditions:"Commande à effectuer 5 jours avant la prestation. Service conseillé dans les 2h suivant la livraison."},
+  {id:3,titre:"Menu Mariage Classique",prix:320,personnes:20,emoji:"💍",conditions:"Réservation obligatoire 3 semaines à l'avance. Acompte de 30% demandé à la commande."},
+  {id:4,titre:"Menu Végétarien Printemps",prix:95,personnes:4,emoji:"🥗",conditions:"Commande 3 jours avant la prestation. Produits frais, consommation dans les 24h suivant la livraison."},
+  {id:5,titre:"Menu Vegan Découverte",prix:85,personnes:4,emoji:"🌱",conditions:"Commande 3 jours avant la prestation. Tous nos produits vegan sont certifiés sans produits d'origine animale."},
+  {id:6,titre:"Menu Entreprise Premium",prix:65,personnes:10,emoji:"🏢",conditions:"Commande minimum 5 jours ouvrés avant l'événement. Matériel de service fourni et à restituer sous 10 jours."},
+];
+
+const livraison = {bordeaux:0,merignac:8,pessac:10,talence:6,begles:7,autre:20};
+
+function getMenu(){
+  const id = parseInt(document.getElementById('cmd-menu').value);
+  return menus.find(m=>m.id===id);
+}
+
+function changerMenu(){
+  const m = getMenu();
+  document.getElementById('cmd-personnes').value = m.personnes;
+  document.getElementById('cmd-personnes').min = m.personnes;
+  document.getElementById('conditions-texte').textContent = m.conditions;
+  calculerPrix();
+}
+
+function calculerPrix(){
+  const m = getMenu();
+  const nb = parseInt(document.getElementById('cmd-personnes').value)||m.personnes;
+  const ville = document.getElementById('cmd-ville').value;
+  const km = livraison[ville]||0;
+  const prixLivraison = km===0?0:5+(km*0.59);
+  const reduction = nb>=(m.personnes+5);
+  const prixMenu = reduction ? m.prix*0.9 : m.prix;
+  const total = prixMenu + prixLivraison;
+
+  const hint = document.getElementById('personnes-hint');
+  if(nb<m.personnes){
+    hint.textContent='⚠️ Minimum '+m.personnes+' personnes pour ce menu';
+    hint.style.color='#c62828';
+  } else if(reduction){
+    hint.textContent='🎉 Réduction de 10% appliquée !';
+    hint.style.color='#2e7d32';
+  } else {
+    hint.textContent='Réduction de 10% à partir de '+(m.personnes+5)+' personnes';
+    hint.style.color='#888';
+  }
+
+  document.getElementById('recap-emoji').textContent = m.emoji;
+  document.getElementById('recap-titre').textContent = m.titre;
+  document.getElementById('recap-personnes').textContent = nb+' personne(s)';
+  document.getElementById('recap-prix-menu').textContent = prixMenu.toFixed(2)+' €';
+  document.getElementById('recap-livraison').textContent = prixLivraison===0?'Gratuite':prixLivraison.toFixed(2)+' €';
+  document.getElementById('recap-total').textContent = total.toFixed(2)+' €';
+
+  if(reduction){
+    document.getElementById('recap-reduction-ligne').style.display='flex';
+    document.getElementById('recap-reduction').textContent = '-'+(m.prix*0.1).toFixed(2)+' €';
+  } else {
+    document.getElementById('recap-reduction-ligne').style.display='none';
+  }
+}
+
+function validerCommande(){
+  const m = getMenu();
+  const nb = parseInt(document.getElementById('cmd-personnes').value)||0;
+  const adresse = document.getElementById('cmd-adresse').value;
+  const date = document.getElementById('cmd-date').value;
+  const alert = document.getElementById('alert-commande');
+
+  if(!adresse||!date){
+    alert.className='alert error';
+    alert.textContent='Veuillez remplir l\'adresse et la date de la prestation.';
+    window.scrollTo(0,0);
+    return;
+  }
+  if(nb<m.personnes){
+    alert.className='alert error';
+    alert.textContent='Le nombre de personnes minimum pour ce menu est de '+m.personnes+'.';
+    window.scrollTo(0,0);
+    return;
+  }
+  alert.className='alert success';
+  alert.textContent='✓ Commande validée ! Un email de confirmation vous a été envoyé.';
+  window.scrollTo(0,0);
+}
+
+// Pré-remplir depuis l'URL si venu depuis détail menu
+const params = new URLSearchParams(window.location.search);
+const idMenu = params.get('id');
+if(idMenu){
+  document.getElementById('cmd-menu').value = idMenu;
+}
+changerMenu();
+</script>
+</body>
+</html>
