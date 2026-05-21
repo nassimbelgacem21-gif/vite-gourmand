@@ -91,3 +91,26 @@
 - Fond blanc cassé pour un rendu chaleureux et appétissant
 - Cartes avec ombres légères au hover pour l'interactivité
 - Conditions de commande toujours bien visibles en encadré coloré
+
+## Maquettes desktop
+
+### Accueil
+![alt text](mockup-desktop-accueil.jpeg)
+
+
+### Page menus
+![alt text](mockup-desktop-menus.jpeg)
+
+### Détail menu
+![alt text](mockup-desktop-detail.jpeg)
+
+## Maquettes mobile
+
+### Accueil mobile
+![alt text](mockup-mobile-accueil.jpeg)
+
+### Page menus mobile
+![alt text](mockup-mobile-menus.jpeg)
+
+### Détail menu mobile
+![alt text](mockup-mobile-detail.jpeg)
